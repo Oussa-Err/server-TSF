@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "Die Hard",
+        "releaseYear": "1990",
+        "duration": "90"
+    },
+    {
+        "id": 2,
+        "name": "Expandable",
+        "releaseYear": "1995",
+        "duration": "80"
+    },
+    {
+        "id": 3,
+        "name": "Intersellar",
+        "releaseYear": "1980",
+        "duration": "120"
+    }
+]
