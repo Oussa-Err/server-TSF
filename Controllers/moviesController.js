@@ -18,6 +18,17 @@ exports.checkID = (req, res, next, value) => {
     next()
 }
 
+exports.validateBody = (req, res, next) => {
+    if (!req.body.name || !req.body.releaseYear) {
+        return res.status(404).json({
+            status: "fail!",
+            message: "the request body is undefined"
+        })
+    }
+
+    next()
+}
+
 exports.getAllMovies = (req, res) => {
     res.status(200).json({
         status: "success!",
@@ -81,9 +92,7 @@ exports.deleteMovie = (req, res) => {
 
 exports.addMovie = (req, res) => {
     const newId = movies[movies.length - 1].id + 1
-
     const newMovie = Object.assign({ id: newId }, req.body)
-
     movies.push(newMovie)
 
     fs.writeFile('./Data/movies.json', JSON.stringify(movies), (err) => {

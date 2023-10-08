@@ -7,7 +7,7 @@ router.param('id', moviesController.checkID)
 
 router.route('/')
     .get(moviesController.getAllMovies)
-    .post(moviesController.addMovie)
+    .post(moviesController.validateBody, moviesController.addMovie)
 
 router.route('/:id')
     .delete(moviesController.deleteMovie)

@@ -15,8 +15,8 @@
     {
         "id": 3,
         "name": "Heat",
-        "releaseYear": "1992",
-        "duration": "100",
+        "releaseYear": "1234",
+        "duration": "35",
         "test": "testing"
     },
     {
@@ -37,6 +37,13 @@
         "id": 6,
         "name": "Heat",
         "releaseYear": "1992",
+        "duration": "100",
+        "test": "testing"
+    },
+    {
+        "id": 7,
+        "name": "limitless",
+        "releaseYear": "1245",
         "duration": "100",
         "test": "testing"
     }
