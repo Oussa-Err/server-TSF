@@ -7,8 +7,9 @@ const port = 3000
 
 let movies = JSON.parse(fs.readFileSync('./Data/movies.json'))
 
-// GET - api/movies
-const getAllMovies =  (req, res) => {
+app.use(express.json())
+
+const getAllMovies = (req, res) => {
     res.status(200).json({
         status: "success!",
         count: movies.length,
@@ -17,10 +18,8 @@ const getAllMovies =  (req, res) => {
         }
     })
 }
-app.get('/api/v1/movies', getAllMovies)
 
-// GET - api/movies/:{query-params}
-app.get('/api/v1/movies/:id', (req, res) => {
+const getMovie = (req, res) => {
     let id = parseInt(req.params['id'])
 
     const match = movies.find(el => el.id === id)
@@ -37,10 +36,10 @@ app.get('/api/v1/movies/:id', (req, res) => {
         status: 'success!',
         data: movies[id - 1]
     })
-})
+}
 
-// PATCH - api/movies/:id
-app.patch('/api/v1/movies/:id', (req, res) => {
+
+const updateMovie = (req, res) => {
     const id = req.params.id * 1
     const movieToUpdate = movies.find(el => el.id === id)
     if (!movieToUpdate) {
@@ -63,10 +62,10 @@ app.patch('/api/v1/movies/:id', (req, res) => {
         })
     })
 
-})
+}
 
-// DELETE - api/v1/movies/:id
-app.delete('/api/v1/movies/:id', (req, res) => {
+
+const deleteMovie = (req, res) => {
     const id = req.params.id * 1
     const movieToDelete = movies.find(el => el.id === id)
     const index = movies.indexOf(movieToDelete)
@@ -90,12 +89,11 @@ app.delete('/api/v1/movies/:id', (req, res) => {
         })
     })
 
-})
+}
 
 
 
-// POST - api/v1/movies
-app.post('/api/v1/movies', (req, res) => {
+const addMovie = (req, res) => {
     console.log(req.body)
 
     const newId = movies[movies.length - 1].id + 1
@@ -112,7 +110,17 @@ app.post('/api/v1/movies', (req, res) => {
             }
         })
     })
-})
+}
+
+
+app.route('/api/v1/movies')
+    .get(getAllMovies)
+    .post(addMovie)
+
+app.route('/api/v1/movies/:id')
+    .delete(deleteMovie)
+    .get(getMovie)
+    .patch(updateMovie)
 
 
 app.listen(process.env.PORT || port, () => {

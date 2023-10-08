@@ -1,35 +1,27 @@
 [
     {
         "id": 1,
-        "name": "Die Hard",
-        "releaseYear": "1990",
-        "duration": "90"
-    },
-    {
-        "id": 2,
-        "name": "Expandable",
-        "releaseYear": "1000",
-        "duration": "20"
-    },
-    {
-        "id": 3,
         "name": "Intersellar",
-        "releaseYear": "1980",
-        "duration": "120"
+        "releaseYear": "2222",
+        "duration": "30"
+    },
+    {
+        "id": 2
+    },
+    {
+        "id": 3
     },
     {
         "id": 4
     },
     {
-        "id": 7
+        "id": 5
     },
     {
-        "id": 8
-    },
-    {
-        "id": 9
-    },
-    {
-        "id": 10
+        "id": 6,
+        "name": "Heat",
+        "releaseYear": "1992",
+        "duration": "100",
+        "test": "testing"
     }
 ]
