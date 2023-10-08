@@ -6,16 +6,32 @@
         "duration": "30"
     },
     {
-        "id": 2
+        "id": 2,
+        "name": "Heat",
+        "releaseYear": "1992",
+        "duration": "100",
+        "test": "testing"
     },
     {
-        "id": 3
+        "id": 3,
+        "name": "Heat",
+        "releaseYear": "1992",
+        "duration": "100",
+        "test": "testing"
     },
     {
-        "id": 4
+        "id": 4,
+        "name": "Heat",
+        "releaseYear": "1992",
+        "duration": "100",
+        "test": "testing"
     },
     {
-        "id": 5
+        "id": 5,
+        "name": "Heat",
+        "releaseYear": "1992",
+        "duration": "100",
+        "test": "testing"
     },
     {
         "id": 6,
