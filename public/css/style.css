@@ -13,3 +13,11 @@ div.card {
     margin: 50px 200px;
     padding: 20px 30px;
 }
+
+
+@media screen and (max-width: 750px) {
+    div.card {
+        margin: 50px 5px;
+        padding: 20px 30px;
+    }
+}
