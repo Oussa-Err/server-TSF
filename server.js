@@ -34,7 +34,7 @@ const testMovie = new Movie({
     name: "Home Alone",
     description: "Action packed movie staring bruce wilis in this trilling adventure",
     duration: 123,
-    // rating: 4.5
+    rating: 4.5
 })
 
 testMovie.save()
