@@ -39,7 +39,7 @@ const testMovie = new Movie({
 
 testMovie.save()
 .then(data => console.log(data))
-.catch(err => console.log("the error is "+ err))
+.catch(err => console.log("the error is: "+ err))
 
 if (process.env.NODE_ENV === 'development') {
     app.listen(process.env.PORT || 3000, () => {
