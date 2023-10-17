@@ -31,8 +31,24 @@ exports.getAllMovies = async (req, res) => {
     }
 }
 
-exports.getMovie = (req, res) => {
+exports.getMovie = async (req, res) => {
+    try {
+        // const movies = await Movie.find({_id: req.params.id})
+        // or
+        const movie = await Movie.findById(req.params.id)
 
+        res.status(200).json({
+            status: "success!",
+            data: {
+                movie
+            }
+        })
+    }catch(err){
+        res.status(404).json({
+            status: "not found",
+            message: err.message
+        })
+    }
 }
 
 exports.createMovie = async (req, res) => {
