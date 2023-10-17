@@ -12,15 +12,30 @@ exports.validateBody = (req, res, next) => {
     next()
 }
 
-exports.getAllMovies = (req, res) => {
-    
+exports.getAllMovies = async (req, res) => {
+    try {
+        const movies = await Movie.find()
+
+        res.status(200).json({
+            status: "success!",
+            length: movies.length,
+            data: {
+                movies
+            }
+        })
+    }catch(err){
+        res.status(404).json({
+            staus: "not found",
+            message: err.message
+        })
+    }
 }
 
 exports.getMovie = (req, res) => {
-    
+
 }
 
-exports.createMovie = async (req, res) => {    
+exports.createMovie = async (req, res) => {
     try {
         const movie = await Movie.create(req.body)
 
@@ -30,7 +45,7 @@ exports.createMovie = async (req, res) => {
                 movie
             }
         })
-    }catch(err){
+    } catch (err) {
         res.status(400).json({
             status: "fail",
             message: err.message
@@ -39,7 +54,7 @@ exports.createMovie = async (req, res) => {
 }
 
 exports.updateMovie = (req, res) => {
-    
+
 }
 
 exports.deleteMovie = (req, res) => {
