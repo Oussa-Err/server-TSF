@@ -23,7 +23,7 @@ exports.getAllMovies = async (req, res) => {
                 movies
             }
         })
-    }catch(err){
+    } catch (err) {
         res.status(404).json({
             staus: "not found",
             message: err.message
@@ -43,7 +43,7 @@ exports.getMovie = async (req, res) => {
                 movie
             }
         })
-    }catch(err){
+    } catch (err) {
         res.status(404).json({
             status: "not found",
             message: err.message
@@ -69,11 +69,36 @@ exports.createMovie = async (req, res) => {
     }
 }
 
-exports.updateMovie = (req, res) => {
+exports.updateMovie = async (req, res) => {
+    try {
+        const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
 
+        res.status(200).json({
+            status: "resource updated successfully",
+            data: {
+                movie: updatedMovie
+            }
+        })
+    } catch (err) {
+        res.status(404).json({
+            status: "Not found!",
+            message: err.message
+        })
+    }
 }
 
-exports.deleteMovie = (req, res) => {
-
+exports.deleteMovie = async (req, res) => {
+    try {
+        const deletedMovie = await Movie.findByIdAndDelete(req.params.id)
+        res.status(200).json({
+            status: "success!",
+            data: null
+        })
+    } catch (err) {
+        res.status(404).json({
+            status: "fail",
+            message: err.message
+        })
+    }
 }
 
