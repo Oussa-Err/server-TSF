@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.route('/')
     .get(moviesController.getAllMovies)
-    .post(moviesController.validateBody, moviesController.addMovie)
+    .post(moviesController.validateBody, moviesController.createMovie)
 
 router.route('/:id')
     .delete(moviesController.deleteMovie)

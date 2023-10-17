@@ -1,9 +1,8 @@
 const fs = require('fs')
-
-let movies = JSON.parse(fs.readFileSync('./Data/movies.json'))
+const Movie = require("../Models/moviesModel")
 
 exports.validateBody = (req, res, next) => {
-    if (!req.body.name || !req.body.releaseYear) {
+    if (!req.body.name) {
         return res.status(404).json({
             status: "fail!",
             message: "the request body is undefined"
@@ -21,6 +20,24 @@ exports.getMovie = (req, res) => {
     
 }
 
+exports.createMovie = async (req, res) => {    
+    try {
+        const movie = await Movie.create(req.body)
+
+        res.status(201).json({
+            status: "created!",
+            data: {
+                movie
+            }
+        })
+    }catch(err){
+        res.status(400).json({
+            status: "fail",
+            message: err.message
+        })
+    }
+}
+
 exports.updateMovie = (req, res) => {
     
 }
@@ -29,6 +46,3 @@ exports.deleteMovie = (req, res) => {
 
 }
 
-exports.addMovie = (req, res) => {
-
-}
