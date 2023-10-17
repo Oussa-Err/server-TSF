@@ -1,4 +1,3 @@
-const fs = require('fs')
 const Movie = require("../Models/moviesModel")
 
 exports.validateBody = (req, res, next) => {
