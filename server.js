@@ -8,7 +8,7 @@ mongoose.connect(process.env.CONN_STR, {
     useNewUrlParser: true
 })
 .then(connection => console.log("DB connection Successful"))
-.catch((error) => console.log("not working because of this error: "+error))
+.catch((error) => console.log("not working because of this error: " + error))
 
 
 const movieSchema = new mongoose.Schema({
