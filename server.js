@@ -4,7 +4,7 @@ const app = require('./app')
 const mongoose = require('mongoose')
 
 
-mongoose.connect(process.env.CONN_STR)
+mongoose.connect(process.env.CONN_STR, {useNewUrlParser: true})
 .then(connection => console.log("DB connection Successful"))
 .catch((error) => console.log("not working because of this error: " + error))
 

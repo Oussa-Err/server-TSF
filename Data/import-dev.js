@@ -5,11 +5,15 @@ const dotenv = require("dotenv")
 dotenv.config({ path: './config.env' })
 
 
-mongoose.connect(process.env.CONN_STR, () => {
-    console.log("DB connection Successful")
+mongoose.connect(process.env.CONN_STR, { UseNewUrlParser: true })
+.then((connection) => {
+    console.log("DB connection successful!")
+})
+.catch((error) => {
+    console.log("an Error has occured: " + error)
 })
 
-const movies = JSON.parse(fs.readFileSync("./data/movies.json"))
+const movies = JSON.parse(fs.readFileSync("Data/movies.json"))
 
 // delete function
 const deleteMovies = async () => {
@@ -20,7 +24,7 @@ const deleteMovies = async () => {
         console.log("error " + err.message)
     }
 
-    // process.exit(1)
+    process.exit(1)
 }
 
 
@@ -30,19 +34,19 @@ const importMovies = async () => {
     try {
         await Movies.create(movies)
         console.log("data imported successfully!")
-    }catch(err){
+    } catch (err) {
         console.log("error: " + err)
     }
 
-    // process.exit(1)
+    process.exit(1)
 }
 
 console.log(process.argv)
 
-if(process.argv[2] === "--delete") {
+if (process.argv[2] === "--delete") {
     deleteMovies()
 }
 
-if(process.argv[2] === '--import') {
+if (process.argv[2] === '--import') {
     importMovies()
 }
