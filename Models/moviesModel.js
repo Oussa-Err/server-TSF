@@ -3,41 +3,59 @@ const mongoose = require('mongoose')
 const movieSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "the name is a required field"],
-        unique: true
+        required: [true, 'Name is required field!'],
+        unique: true,
+        maxlength: [100, "Movie name must not have more than 100 characters"],
+        minlength: [4, "Movie name must have at least 4 charachters"],
+        trim: true,
+        validate: [validator.isAlpha, "Name should only contain alphabets."]
     },
     description: {
         type: String,
-        required: [true, "the description is a required field"],
+        required: [true, 'Description is required field!'],
+        trim: true
     },
     duration: {
         type: Number,
-        required: [true, "duration is required"]
+        required: [true, 'Duration is required field!']
     },
-    rating: {
+    ratings: {
         type: Number,
-        default: 1.0,
-
     },
     totalRating: {
-        type: Number,
+        type: Number
     },
     releaseYear: {
         type: Number,
-        required: true
+        required: [true, 'Release year is required field!']
     },
-    releaseDate: {
-        type: Date(),
-        required: true
+    releaseDate:{
+        type: Date
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now(),
     },
     genres: {
-        type: String,
-        required: true
+        type: [String],
+        required: [true, 'Genres is required field!'],
     },
     directors: {
+        type: [String],
+        required: [true, 'Directors is required field!']
+    },
+    coverImage:{
+        type: String,
+        require: [true, 'Cover image is required field!']
+    },
+    actors: {
+        type: [String],
+        require: [true, 'actors is required field!']
+    },
+    price: {
         type: Number,
-        required: true
-    }
+        require: [true, 'Price is required field!']
+    },
 })
 
 const Movie = mongoose.model('Movie', movieSchema)
