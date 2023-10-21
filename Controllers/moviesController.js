@@ -14,7 +14,12 @@ exports.validateBody = (req, res, next) => {
 exports.getAllMovies = async (req, res) => {
     try {
         console.log(req.query)
-        const movies = await Movie.findOne(req.query)
+        let queryStr = JSON.stringify(req.query)
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
+        const queryObj = JSON.parse(queryStr)
+        console.log(queryObj)
+
+        const movies = await Movie.find(queryObj)
 
         res.status(200).json({
             status: "success!",
@@ -25,7 +30,7 @@ exports.getAllMovies = async (req, res) => {
         })
     } catch (err) {
         res.status(404).json({
-            staus: "not found",
+            staus: "fail!",
             message: err.message
         })
     }
