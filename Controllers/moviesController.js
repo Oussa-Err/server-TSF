@@ -13,7 +13,8 @@ exports.validateBody = (req, res, next) => {
 
 exports.getAllMovies = async (req, res) => {
     try {
-        const movies = await Movie.find()
+        console.log(req.query)
+        const movies = await Movie.findOne(req.query)
 
         res.status(200).json({
             status: "success!",
@@ -88,7 +89,7 @@ exports.updateMovie = async (req, res) => {
 
 exports.deleteMovie = async (req, res) => {
     try {
-        const deletedMovie = await Movie.findByIdAndDelete(req.params.id)
+        await Movie.findByIdAndDelete(req.params.id)
         res.status(200).json({
             status: "success!",
             data: null
