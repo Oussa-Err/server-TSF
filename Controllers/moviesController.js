@@ -1,3 +1,4 @@
+const { query } = require("express")
 const Movie = require("../Models/moviesModel")
 
 exports.validateBody = (req, res, next) => {
@@ -17,9 +18,19 @@ exports.getAllMovies = async (req, res) => {
         let queryStr = JSON.stringify(req.query)
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
         const queryObj = JSON.parse(queryStr)
-        console.log(queryObj)
 
-        const movies = await Movie.find(queryObj)
+        let query = Movie.find(queryObj)
+
+        if(req.query.sort) {
+            const sortBy = req.query.sort.split(',').join(' ')
+            console.log(sortBy)
+            query = query.sort(sortBy)
+            console.log(query)
+        }else{
+            query = query.sort('-createdAt')
+        }
+        const movies = await query
+
 
         res.status(200).json({
             status: "success!",

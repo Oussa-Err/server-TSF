@@ -2,16 +2,16 @@ const express = require('express')
 const moviesController = require('../Controllers/moviesController')
 
 const router = express.Router()
-const { getAllMovies } = moviesController
-// router.param('id', moviesController.checkID)
+const { getAllMovies, validateBody, deleteMovie, updateMovie, getMovie, createMovie } = moviesController
+// router.param('id', moviesController.checkID) // we won't need this moongose does it for a living
 
 router.route('/')
     .get(getAllMovies)
-    .post(moviesController.validateBody, moviesController.createMovie)
+    .post(validateBody, createMovie)
 
 router.route('/:id')
-    .delete(moviesController.deleteMovie)
-    .get(moviesController.getMovie)
-    .patch(moviesController.updateMovie)
+    .delete(deleteMovie)
+    .get(getMovie)
+    .patch(updateMovie)
 
 module.exports = router
