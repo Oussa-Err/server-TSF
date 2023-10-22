@@ -14,6 +14,8 @@ exports.validateBody = (req, res, next) => {
 
 exports.getAllMovies = async (req, res) => {
     try {
+
+        //ADVANCE FILTER 
         console.log(req.query)
         let queryStr = JSON.stringify(req.query)
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
@@ -21,16 +23,24 @@ exports.getAllMovies = async (req, res) => {
 
         let query = Movie.find(queryObj)
 
-        if(req.query.sort) {
-            const sortBy = req.query.sort.split(',').join(' ')
-            console.log(sortBy)
-            query = query.sort(sortBy)
-            console.log(query)
-        }else{
-            query = query.sort('-createdAt')
+        //SORTING LOGIC
+        if (req.query.sort) {
+            const sortBy = req.query.sort.split(',').join(' ');
+            query = query.sort(sortBy); 
+        } else {
+            query = query.sort('-createdAt');
         }
-        const movies = await query
+        
+        
+        //LIMITING FIELDS
+        if (req.query.fields) {
+            const fields = req.query.fields.split(',').join(' ')
+            query = query.select(fields)
+        }else {
+            query = query.select('-__v')
+        }
 
+        const movies = await query
 
         res.status(200).json({
             status: "success!",
