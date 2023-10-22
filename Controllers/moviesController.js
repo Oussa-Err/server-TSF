@@ -1,12 +1,9 @@
 const Movie = require("../Models/moviesModel")
 
-exports.validateBody = (req, res, next) => {
-    if (!req.body.name) {
-        return res.status(404).json({
-            status: "fail!",
-            message: "the request body is undefined"
-        })
-    }
+
+exports.getHighestRatings = async (req, res, next) => {
+    req.query.limit = '5'
+    req.query.sort = '-ratings'
 
     next()
 }
