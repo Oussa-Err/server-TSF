@@ -1,4 +1,3 @@
-const { query } = require("express")
 const Movie = require("../Models/moviesModel")
 
 exports.validateBody = (req, res, next) => {
@@ -16,7 +15,6 @@ exports.getAllMovies = async (req, res) => {
     try {
 
         //ADVANCE FILTER 
-        console.log(req.query)
         let queryStr = JSON.stringify(req.query)
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
         const queryObj = JSON.parse(queryStr)
@@ -31,13 +29,25 @@ exports.getAllMovies = async (req, res) => {
             query = query.sort('-createdAt');
         }
         
-        
-        //LIMITING FIELDS
+        //QUERY FIELDS
         if (req.query.fields) {
             const fields = req.query.fields.split(',').join(' ')
             query = query.select(fields)
         }else {
             query = query.select('-__v')
+        }
+
+        //PAGINATION
+        const page = req.query.page*1 || 1
+        const limit = req.query.limit*1 || 10
+        const skip = (page - 1) * limit
+        query = query.skip(skip).limit(limit)
+
+        if(req.query.page){
+            const countDocs = await Movie.countDocuments()
+            if(skip >= countDocs){
+                throw new Error('this page is not found')
+            }
         }
 
         const movies = await query
