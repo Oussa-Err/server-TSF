@@ -9,6 +9,11 @@ const { getAllMovies, deleteMovie, updateMovie, getHighestRatings, getMovie, cre
 router.route('/highest-ratings')
     .get(getHighestRatings, getAllMovies)
 
+router.route('/stats')
+    .get(moviesController.getMovieStats)
+
+router.route('/movies-by-genre/:genre')
+    .get(moviesController.getMovieByGenre)
 
 router.route('/')
     .get(getAllMovies)
