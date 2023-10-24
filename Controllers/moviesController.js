@@ -41,8 +41,6 @@ exports.getMovie = async (req, res) => {
     try {
         // const movies = await Movie.find({_id: req.params.id})
         // or
-        console.log(req.params)
-
         const movie = await Movie.findById(req.params.id)
 
         res.status(200).json({

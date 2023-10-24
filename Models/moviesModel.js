@@ -56,18 +56,18 @@ const movieSchema = new mongoose.Schema({
         type: Number,
         require: [true, 'Price is required field!']
     },
-})
+}, {toJSON: {virtuals: true}, toObject: {virtuals: true}})
 
 
 
 // virtual property
 movieSchema.virtual('durationInHours').get(function(){
-    const durationInHOur = this.duration / 60
     console.log(this.duration)
-    console.log(durationInHOur)
+    return this.duration / 60
 })
 
 
+// MIDLEWARE:
 // createMovie is triggered
 // insertMany and 
 
