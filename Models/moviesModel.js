@@ -58,6 +58,20 @@ const movieSchema = new mongoose.Schema({
     },
 })
 
+
+
+// virtual property
+movieSchema.virtual('durationInHours').get(function(){
+    const durationInHOur = this.duration / 60
+    console.log(this.duration)
+    console.log(durationInHOur)
+})
+
+
+// createMovie is triggered
+// insertMany and 
+
+
 const Movie = mongoose.model('Movie', movieSchema)
 
 module.exports = Movie
