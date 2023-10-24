@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const fs = require('fs')
 
 const movieSchema = new mongoose.Schema({
     name: {
@@ -28,7 +29,7 @@ const movieSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Release year is required field!']
     },
-    releaseDate:{
+    releaseDate: {
         type: Date
     },
     createdAt: {
@@ -44,7 +45,7 @@ const movieSchema = new mongoose.Schema({
         type: [String],
         required: [true, 'Directors is required field!']
     },
-    coverImage:{
+    coverImage: {
         type: String,
         require: [true, 'Cover image is required field!']
     },
@@ -56,20 +57,35 @@ const movieSchema = new mongoose.Schema({
         type: Number,
         require: [true, 'Price is required field!']
     },
-}, {toJSON: {virtuals: true}, toObject: {virtuals: true}})
+    createdBy: {
+        type: String
+    }
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } })
 
 
 
 // virtual property
-movieSchema.virtual('durationInHours').get(function(){
-    console.log(this.duration)
+movieSchema.virtual('durationInHours').get(function () {
     return this.duration / 60
 })
 
 
 // MIDLEWARE:
-// createMovie is triggered
-// insertMany and 
+// save() or create() is triggered
+// insertMany and findByIdAndUpdate won't be triggred
+movieSchema.pre('save', function (next) {
+    this.createdBy = 'wiss'
+    // console.log(this)
+    next()
+})
+
+movieSchema.post('save', function (doc, next) {
+    const content = `\nA new movie document with name ${this.name} has been created by ${this.createdBy} at ${this.createdAt}`
+    fs.writeFileSync('log/log.txt', content, { flag: 'a' }, (err) => {
+        console.log(err)
+    })
+    next()
+})
 
 
 const Movie = mongoose.model('Movie', movieSchema)
