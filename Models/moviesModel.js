@@ -78,7 +78,7 @@ movieSchema.pre('save', function (next) {
     next()
 })
 
-movieSchema.post('save', function (next) {
+movieSchema.post('save', function (doc, next) {
     const content = `\n\nA new movie document with name ${this.name} has been created by ${this.createdBy} at ${this.createdAt}`
     fs.writeFileSync('log/log.txt', content, { flag: 'a' }, (err) => {
         console.log(err)
@@ -87,13 +87,14 @@ movieSchema.post('save', function (next) {
 })
 
 // query middleware
-movieSchema.pre('find', function(next){
-    this.find({releaseYear: {$lte: Date.now()}})
+movieSchema.pre(/^find/, function(next){
+    this.find({releaseYear: {$lte: new Date().getFullYear()}})
+    this.find({releaseDate: {$lte: Date.now()}})
     this.entryTiming = Date.now()
     next()
 })
 
-movieSchema.post("find", function(doc, next){
+movieSchema.post(/^find/, function(doc, next){
     const endingTime = Date.now()
     const content = `\n\ntime took to fetch is: ${endingTime - this.entryTiming} milliseconds`
     fs.writeFileSync("log/log.txt", content, {flag: "a"}, (err) => {

@@ -1,16 +1,47 @@
 this document was created by SSAMA at Wed Oct 25 2023 00:17:39 GMT+0100 (GMT+01:00)
+
 this document was created by SSAMA at Wed Oct 25 2023 00:20:53 GMT+0100 (GMT+01:00)
 
-time took to fetch is: -1769 
-
-time took to fetch is: -186 
-
-time took to fetch is: NaN 
-
-time took to fetch is: NaN 
-
-time took to fetch is: NaN 
-
-time took to fetch is: 248 
-
 time took to fetch is: 1445 milliseconds
+
+time took to fetch is: 168 milliseconds
+
+time took to fetch is: 139 milliseconds
+
+time took to fetch is: 211 milliseconds
+
+time took to fetch is: 302 milliseconds
+
+time took to fetch is: 156 milliseconds
+
+A new movie document with name The Matrix chapter 6 has been created by ouss at Wed Oct 25 2023 11:51:41 GMT+0100 (GMT+01:00)
+
+A new movie document with name The Matrix chapter 7 has been created by ouss at Wed Oct 25 2023 11:56:04 GMT+0100 (GMT+01:00)
+
+time took to fetch is: 182 milliseconds
+
+time took to fetch is: 4666 milliseconds
+
+A new movie document with name The Matrix chapter 8 has been created by ouss at Wed Oct 25 2023 14:38:36 GMT+0100 (GMT+01:00)
+
+time took to fetch is: 615 milliseconds
+
+time took to fetch is: 864 milliseconds
+
+time took to fetch is: 531 milliseconds
+
+time took to fetch is: 5335 milliseconds
+
+time took to fetch is: 102 milliseconds
+
+time took to fetch is: 104 milliseconds
+
+time took to fetch is: 102 milliseconds
+
+time took to fetch is: 4987 milliseconds
+
+time took to fetch is: 1676 milliseconds
+
+time took to fetch is: 97 milliseconds
+
+time took to fetch is: 1153 milliseconds
