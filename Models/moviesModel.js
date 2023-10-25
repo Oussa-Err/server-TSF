@@ -70,20 +70,36 @@ movieSchema.virtual('durationInHours').get(function () {
 })
 
 
-// MIDLEWARE:
+// MIDLEWARES:
 // save() or create() is triggered
 // insertMany and findByIdAndUpdate won't be triggred
 movieSchema.pre('save', function (next) {
-    this.createdBy = 'wiss'
-    // console.log(this)
+    this.createdBy = 'ouss'
     next()
 })
 
-movieSchema.post('save', function (doc, next) {
-    const content = `\nA new movie document with name ${this.name} has been created by ${this.createdBy} at ${this.createdAt}`
+movieSchema.post('save', function (next) {
+    const content = `\n\nA new movie document with name ${this.name} has been created by ${this.createdBy} at ${this.createdAt}`
     fs.writeFileSync('log/log.txt', content, { flag: 'a' }, (err) => {
         console.log(err)
     })
+    next()
+})
+
+// query middleware
+movieSchema.pre('find', function(next){
+    this.find({releaseYear: {$lte: Date.now()}})
+    this.entryTiming = Date.now()
+    next()
+})
+
+movieSchema.post("find", function(doc, next){
+    const endingTime = Date.now()
+    const content = `\n\ntime took to fetch is: ${endingTime - this.entryTiming} milliseconds`
+    fs.writeFileSync("log/log.txt", content, {flag: "a"}, (err) => {
+        console.log(err)
+    })
+console.log(doc)
     next()
 })
 

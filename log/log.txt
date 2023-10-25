@@ -1,2 +1,16 @@
 this document was created by SSAMA at Wed Oct 25 2023 00:17:39 GMT+0100 (GMT+01:00)
 this document was created by SSAMA at Wed Oct 25 2023 00:20:53 GMT+0100 (GMT+01:00)
+
+time took to fetch is: -1769 
+
+time took to fetch is: -186 
+
+time took to fetch is: NaN 
+
+time took to fetch is: NaN 
+
+time took to fetch is: NaN 
+
+time took to fetch is: 248 
+
+time took to fetch is: 1445 milliseconds
