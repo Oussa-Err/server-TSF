@@ -17,7 +17,9 @@ const movieSchema = new mongoose.Schema({
     },
     duration: {
         type: Number,
-        required: [true, 'Duration is required field!']
+        required: [true, 'Duration is required field!'],
+        min: [40, "the movie's duration must be gt than 40m"],
+        max: [200, "the movie's duration must be less than 200m"]
     },
     ratings: {
         type: Number,
@@ -87,20 +89,26 @@ movieSchema.post('save', function (doc, next) {
 })
 
 // query middleware
-movieSchema.pre(/^find/, function(next){
-    this.find({releaseYear: {$lte: new Date().getFullYear()}})
-    this.find({releaseDate: {$lte: Date.now()}})
+movieSchema.pre(/^find/, function (next) {
+    this.find({ releaseYear: { $lte: new Date().getFullYear() } })
     this.entryTiming = Date.now()
     next()
 })
 
-movieSchema.post(/^find/, function(doc, next){
+movieSchema.post(/^find/, function (_, next) {
+    this.find({ releaseYear: { $lte: new Date() } })
     const endingTime = Date.now()
     const content = `\n\ntime took to fetch is: ${endingTime - this.entryTiming} milliseconds`
-    fs.writeFileSync("log/log.txt", content, {flag: "a"}, (err) => {
+    fs.writeFileSync("log/log.txt", content, { flag: "a" }, (err) => {
         console.log(err)
     })
-console.log(doc)
+
+    next()
+})
+
+movieSchema.pre('aggregate', function (next) {
+    this.pipeline().unshift({ $match: { releaseYear: { $lte: new Date().getFullYear() } } })
+
     next()
 })
 

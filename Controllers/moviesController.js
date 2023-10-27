@@ -2,15 +2,16 @@ const Movie = require("../Models/moviesModel")
 const ApiFeatures = require("../utils/ApiFeatures.js")
 
 
-// route handlers:
-
 //MANIPULATING THE REQUEST
+// api/v1/movies/highest-ratings
 exports.getHighestRatings = async (req, res, next) => {
     req.query.limit = '5'
     req.query.sort = '-ratings'
 
     next()
 }
+// route handlers:
+
 
 exports.getAllMovies = async (req, res) => {
     try {
