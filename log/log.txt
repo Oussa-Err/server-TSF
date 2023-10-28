@@ -73,3 +73,5 @@ time took to fetch is: 1220 milliseconds
 time took to fetch is: 2359 milliseconds
 
 time took to fetch is: 159 milliseconds
+
+time took to fetch is: 1443 milliseconds
