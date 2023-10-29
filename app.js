@@ -20,10 +20,6 @@ app.use((req, res, next) => {
 app.use('/api/v1/movies', moviesRoute)
 
 app.all('*', (req, res, next) => {
-    // const err = new Error(`can't find ${req.originalUrl} on the server`)
-    // console.log(err.stack)
-    // err.status = "fail"
-    // err.statusCode = 404
     const err = new CustomError(`can't find ${req.originalUrl} on the server`, 404)
     next(err)
 })
