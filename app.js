@@ -11,10 +11,7 @@ app.use(morgan('dev'))
 // serving static files
 app.use(express.static('./public'))
 
-app.use((req, res, next) => {
-    req.requestedAt = new Date().toISOString()
-    next()
-})
+
 
 
 app.use('/api/v1/movies', moviesRoute)
