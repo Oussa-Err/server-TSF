@@ -9,7 +9,7 @@ mongoose.connect(process.env.CONN_STR, {useNewUrlParser: true})
 
 
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
     app.listen(process.env.PORT || 3000, () => {
         console.log('the server has started...')
     })

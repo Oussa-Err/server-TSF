@@ -1,7 +1,7 @@
 const Movie = require("../Models/moviesModel")
 const ApiFeatures = require("../utils/ApiFeatures.js")
 const asyncErrHandler = require('./../utils/asyncErrHandler')
-const CustumError = require('./../utils/customError')
+const CustomError = require('./../utils/customError')
 
 //MANIPULATING THE REQUEST
 // api/v1/movies/highest-ratings
@@ -33,16 +33,15 @@ exports.getAllMovies = asyncErrHandler(async (req, res) => {
     })
 })
 
-exports.getMovie = async (req, res, next) => {
+exports.getMovie = asyncErrHandler(async (req, res, next) => {
     // const movies = await Movie.find({_id: req.params.id})
     // or
     const movie = await Movie.findById(req.params.id)
 
     if (!movie) {
-        const error = new CustumError(`this ${req.params.id} is not found`, 404)
+        const error = new CustomError(`this ID: ${req.params.id} is not found`, 404)
         return next(error)
     }
-
     res.status(200).json({
         status: "success!",
         data: {
@@ -50,7 +49,7 @@ exports.getMovie = async (req, res, next) => {
         }
     })
 
-}
+})
 
 exports.createMovie = asyncErrHandler(async (req, res) => {
     const createdMovie = await Movie.create(req.body)
@@ -64,36 +63,39 @@ exports.createMovie = asyncErrHandler(async (req, res) => {
 
 })
 
-exports.updateMovie = async (req, res, next) => {
-    const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+exports.updateMovie = asyncErrHandler(async (req, res, next) => {
+
+    const updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
     if (!updatedMovie) {
-        const error = new CustumError(`this ${req.params.id} is not found`, 404)
-        return next(error)
+        const error = new CustomError('Movie with that ID is not found!', 404);
+        return next(error);
     }
 
     res.status(200).json({
-        status: "resource updated successfully",
+        status: "success",
         data: {
             movie: updatedMovie
         }
-    })
-}
+    });
 
-exports.deleteMovie = async (req, res, next) => {
+})
 
-    const deletedMovie = await Movie.findByIdAndDelete(req.params.id)
+
+exports.deleteMovie = asyncErrHandler(async (req, res, next) => {
+
+    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
 
     if (!deletedMovie) {
-        const error = new CustumError(`this ${req.params.id} is not found`, 404)
-        return next(error)
+        const error = new CustomError('Movie with that ID is not found!', 404);
+        return next(error);
     }
 
-    res.status(200).json({
-        status: "success!",
+    res.status(204).json({
+        status: 'success',
         data: null
-    })
-}
+    });
+})
 
 exports.getMovieStats = asyncErrHandler(async (req, res) => {
 
