@@ -1,69 +1,15 @@
 
 
-time took to fetch is: 222 milliseconds
-
-time took to fetch is: 293 milliseconds
-
-time took to fetch is: 178 milliseconds
+time took to fetch is: 620 milliseconds
 
 time took to fetch is: 172 milliseconds
 
-time took to fetch is: 186 milliseconds
+A new movie document with name ABVb has been created by ouss at Tue Oct 31 2023 13:35:14 GMT+0100 (GMT+01:00)
 
-time took to fetch is: 170 milliseconds
+time took to fetch is: 209 milliseconds
 
-time took to fetch is: 148 milliseconds
+time took to fetch is: 1860 milliseconds
 
-time took to fetch is: 1584 milliseconds
+time took to fetch is: 144 milliseconds
 
-time took to fetch is: 218 milliseconds
-
-time took to fetch is: 2249 milliseconds
-
-time took to fetch is: 800 milliseconds
-
-time took to fetch is: 7356 milliseconds
-
-time took to fetch is: 194 milliseconds
-
-time took to fetch is: 1279 milliseconds
-
-time took to fetch is: 298 milliseconds
-
-time took to fetch is: 178 milliseconds
-
-time took to fetch is: 159 milliseconds
-
-time took to fetch is: 155 milliseconds
-
-time took to fetch is: 153 milliseconds
-
-time took to fetch is: 164 milliseconds
-
-time took to fetch is: 219 milliseconds
-
-time took to fetch is: 186 milliseconds
-
-time took to fetch is: 253 milliseconds
-
-time took to fetch is: 163 milliseconds
-
-time took to fetch is: 167 milliseconds
-
-time took to fetch is: 167 milliseconds
-
-time took to fetch is: 164 milliseconds
-
-time took to fetch is: 230 milliseconds
-
-time took to fetch is: 234 milliseconds
-
-time took to fetch is: 164 milliseconds
-
-time took to fetch is: 189 milliseconds
-
-time took to fetch is: 279 milliseconds
-
-time took to fetch is: 174 milliseconds
-
-time took to fetch is: 163 milliseconds
+time took to fetch is: 213 milliseconds

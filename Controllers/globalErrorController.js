@@ -30,6 +30,11 @@ const castError = (error) => {
     return msg
 }
 
+const duplicateKeyError = (error) => {
+    const msg = new CustomError(`this name already exist: ${error.keyValue.name}`, 400)
+    return msg
+}
+
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500
     err.status = err.status || "error"
@@ -37,11 +42,8 @@ module.exports = (err, req, res, next) => {
     if (process.env.NODE_ENV === 'development') {
         devError(res, err)
     } else if(process.env.NODE_ENV === "production"){
-        // let error = {...err}
-        // console.log(error)
-        if(err.name === "CastError"){
-            err = castError(err)
-        }
+        if(err.name === "CastError") err = castError(err)
+        if(err.code === 11000) err = duplicateKeyError(err)
         prodError(res, err)
     }
 }

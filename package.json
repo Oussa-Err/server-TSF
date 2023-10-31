@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start_prod": "NODE_ENV=production& nodemon server.js",
+    "start_dev": "NODE_ENV=development& nodemon server.js"
   },
   "author": "ouss-err",
   "license": "ISC",

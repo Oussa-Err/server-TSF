@@ -4,13 +4,11 @@ const app = require('./app')
 const mongoose = require('mongoose')
 
 
-mongoose.connect(process.env.CONN_STR, {useNewUrlParser: true})
-.then(connection => console.log("DB connection Successful"))
+mongoose.connect(process.env.CONN_STR, { useNewUrlParser: true })
+    .then(connection => console.log("DB connection Successful"))
 
 
 
-if (process.env.NODE_ENV === 'production') {
-    app.listen(process.env.PORT || 3000, () => {
-        console.log('the server has started...')
-    })
-}
+app.listen(process.env.PORT || 3000, () => {
+    console.log('the server has started...')
+})

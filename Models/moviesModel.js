@@ -82,9 +82,9 @@ movieSchema.virtual('durationInHours').get(function () {
 })
 
 
-// MIDLEWARES:
-// save() or create() is triggered
-// insertMany and findByIdAndUpdate won't be triggred
+//EXECUTED BEFORE THE DOCUMENT IS SAVED IN DB
+//.save() or .create()
+//inserMany, findByIdAndUpdate will not work
 movieSchema.pre('save', function (next) {
     this.createdBy = 'ouss'
     next()
