@@ -67,6 +67,7 @@ const movieSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
+        min: [3, 'The price should only be more than 3 not {VALUE}'],
         require: [true, 'Price is required field!']
     },
     createdBy: {

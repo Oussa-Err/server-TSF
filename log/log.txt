@@ -1,0 +1,7 @@
+
+
+time took to fetch is: 240 milliseconds
+
+time took to fetch is: 216 milliseconds
+
+time took to fetch is: 191 milliseconds
