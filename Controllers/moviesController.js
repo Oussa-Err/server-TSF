@@ -23,7 +23,6 @@ exports.getAllMovies = asyncErrHandler(async (req, res) => {
         .paginate()
 
     const movies = await features.query
-    console.log(x)
 
     res.status(200).json({
         status: "success!",
