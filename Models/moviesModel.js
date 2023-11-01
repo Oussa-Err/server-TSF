@@ -27,7 +27,7 @@ const movieSchema = new mongoose.Schema({
             validator: function () {
                 return this.ratings >= 1.0 && this.ratings <= 10.0
             },
-            message: "should be between 1.0 and 10.0 not {VALUE}"
+            message: "Ratings {VALUE} should be above 1.0 and below 10.0"
         }
     },
     totalRating: {

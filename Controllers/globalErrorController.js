@@ -35,6 +35,14 @@ const duplicateKeyError = (error) => {
     return msg
 }
 
+const validationError = (error) => {
+    const errorMsg = Object.values(error.errors).map(el => el.message)
+    const messages = errorMsg.join(". ")
+    console.log(messages)
+    return new CustomError(messages, 400)
+    
+}
+
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500
     err.status = err.status || "error"
@@ -42,8 +50,14 @@ module.exports = (err, req, res, next) => {
     if (process.env.NODE_ENV === 'development') {
         devError(res, err)
     } else if(process.env.NODE_ENV === "production"){
+        
         if(err.name === "CastError") err = castError(err)
+        
         if(err.code === 11000) err = duplicateKeyError(err)
+        
+        if(err.name === "ValidationError") err = validationError(err)
+
+
         prodError(res, err)
     }
 }
