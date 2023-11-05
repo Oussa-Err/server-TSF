@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const fs = require('fs')
+const bcrypt = require('bcrypt')
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -22,8 +25,37 @@ const userSchema = new mongoose.Schema({
     },
     confirmedPassword: {
         type: String,
-        required: [true, 'please confirm your password']
-    }
+        required: [true, 'please confirm your password'],
+        validate: {
+            // The validator will only be triggred for save() and create()
+            validator: function(pwd) {
+                return this.confirmedPassword === this.password
+            },
+            message: "Confirmed password & Password should match"
+        }
+    },
+    createdAt: {
+        type: Date,
+        default: new Date().toISOString(),
+        select: false
+    },
+})
+
+
+
+userSchema.pre('save', async function(val, next){
+    this.createdBy = this.name
+    if(!this.isModified) return next()
+    this.password = await bcrypt.hash(this.password, 12)
+    this.confirmedPassword = undefined
+})
+
+userSchema.post('save', function (doc, next) {
+    const content = `\n\nA new user with name ${this.name} has been created by ${this.createdBy} at ${this.createdAt}`
+    fs.writeFileSync('log/log.txt', content, { flag: 'a' }, (err) => {
+        console.log(err.message)
+    })
+    next()
 })
 
 const User = mongoose.model('User', userSchema)
