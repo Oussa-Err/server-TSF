@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'please enter a password'],
-        minlength: [8, 'minimum 8 characters']
+        minlength: [8, 'minimum 8 characters'],
+        select: false
     },
     confirmedPassword: {
         type: String,
@@ -43,11 +44,12 @@ const userSchema = new mongoose.Schema({
 
 
 
-userSchema.pre('save', async function(val, next){
+userSchema.pre('save', async function(next){
     this.createdBy = this.name
     if(!this.isModified) return next()
-    this.password = await bcrypt.hash(this.password, 12)
+    this.password = await bcrypt.hash(this.password, 10)
     this.confirmedPassword = undefined
+    next()
 })
 
 userSchema.post('save', function (doc, next) {
