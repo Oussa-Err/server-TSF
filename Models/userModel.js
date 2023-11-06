@@ -42,13 +42,11 @@ const userSchema = new mongoose.Schema({
     },
 })
 
-
-
 userSchema.pre('save', async function(next){
     this.createdBy = this.name
     if(!this.isModified) return next()
     this.password = await bcrypt.hash(this.password, 10)
-    this.confirmedPassword = undefined
+this.confirmedPassword = undefined
     next()
 })
 
@@ -59,6 +57,10 @@ userSchema.post('save', function (doc, next) {
     })
     next()
 })
+
+userSchema.methods.comparePswAndPswdb = async function(psw, pswdb) {
+    return await bcrypt.compare(psw, pswdb)
+}
 
 const User = mongoose.model('User', userSchema)
 
