@@ -2,10 +2,11 @@ const User = require('../Models/userModel')
 const asyncErrHandler = require('./../utils/asyncErrHandler')
 const jwt = require('jsonwebtoken')
 const CustomError = require('../utils/customError')
+const util = require('util')
 
 
 const signToken = function (id) {
-    return jwt.sign({ id: id }, process.env.SECRET_STR, { expiresIn: 2592000000 })
+    return jwt.sign({ id: id }, process.env.SECRET_STR, { expiresIn: process.env.TOKEN_EXPIRATION })
 }
 
 exports.signUp = asyncErrHandler(async (req, res) => {
@@ -22,7 +23,6 @@ exports.signUp = asyncErrHandler(async (req, res) => {
 
 
 exports.login = asyncErrHandler(async (req, res, next) => {
-    console.log(req.body)
     const { password, email } = req.body
 
     if (!password || !email) {
@@ -31,22 +31,44 @@ exports.login = asyncErrHandler(async (req, res, next) => {
     }
 
     const user = await User.findOne({ email }).select("+password")
-    const token = signToken(user._id)
-
+    
     if (!user) {
         const err = new CustomError('User not found', 400);
         return next(err);
     }
-
+    
     const isMatch = await user.comparePswAndPswdb(password, user.password);
-
+    
     if (!isMatch) {
         const err = new CustomError('Password incorrect', 400);
         return next(err);
     }
+    const token = signToken(user._id)
 
     res.status(200).json({
         status: "successs",
         token
     })
+})
+
+exports.protect = asyncErrHandler(async (req, res, next) => {
+    // read the token and check if it exist
+    let token = req.headers.authorization
+    
+    if(token && token.startsWith('bearer ')){
+        token = token.split(' ')[1]
+    }
+    if(!token){
+        const err = new CustomError('you are not logged in', 401)
+        next(err)
+    }
+
+    // validate the token
+    const conn = await util.promisify(jwt.verify)(token, process.env.SECRET_STR)
+
+
+
+    console.log(conn)
+
+    next()
 })

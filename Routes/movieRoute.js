@@ -1,6 +1,6 @@
 const express = require('express')
 const moviesController = require('../Controllers/moviesController')
-
+const usersController = require('../Controllers/usersController')
 const router = express.Router()
 const { getAllMovies, deleteMovie, updateMovie, getHighestRatings, getMovie, createMovie, getMovieStats, getMovieByGenre } = moviesController
 // router.param('id', moviesController.checkID) // we won't need this moongose does it for a living
@@ -16,7 +16,7 @@ router.route('/movies-by-genre/:genre')
     .get(getMovieByGenre)
 
 router.route('/')
-    .get(getAllMovies)
+    .get(usersController.protect, getAllMovies)
     .post(createMovie)
 
 router.route('/:id')

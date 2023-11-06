@@ -43,6 +43,16 @@ const validationError = (error) => {
     
 }
 
+const handleJWTError = () => {
+    return new CustomError('Invalid token, Please login again', 401)
+}
+
+const handleExpiredJWT = () => {
+    return new CustomError("you've been absent for a while.\nLog in again", 401)
+}
+
+
+
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500
     err.status = err.status || "error"
@@ -56,6 +66,10 @@ module.exports = (err, req, res, next) => {
         if(err.code === 11000) err = duplicateKeyError(err)
         
         if(err.name === "ValidationError") err = validationError(err)
+
+        if(err.name === "TokenExpiredError") err = handleExpiredJWT(err)
+
+        if(err.name === "JsonWebTokenError") err = handleJWTError(err)
 
 
         prodError(res, err)
