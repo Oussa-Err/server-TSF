@@ -5,7 +5,7 @@ const CustomError = require('../utils/customError')
 
 
 const signToken = function (id) {
-    jwt.sign({ id: id }, process.env.SECRET_STR, { expiresIn: 2592000000 })
+    return jwt.sign({ id: id }, process.env.SECRET_STR, { expiresIn: 2592000000 })
 }
 
 exports.signUp = asyncErrHandler(async (req, res) => {
@@ -19,6 +19,7 @@ exports.signUp = asyncErrHandler(async (req, res) => {
         data: createdUser
     })
 })
+
 
 exports.login = asyncErrHandler(async (req, res, next) => {
     console.log(req.body)
@@ -46,7 +47,6 @@ exports.login = asyncErrHandler(async (req, res, next) => {
 
     res.status(200).json({
         status: "successs",
-        token,
-        user
+        token
     })
 })
