@@ -31,14 +31,14 @@ exports.login = asyncErrHandler(async (req, res, next) => {
     }
 
     const user = await User.findOne({ email }).select("+password")
-    
+
     if (!user) {
         const err = new CustomError('User not found', 400);
         return next(err);
     }
-    
+
     const isMatch = await user.comparePswAndPswdb(password, user.password);
-    
+
     if (!isMatch) {
         const err = new CustomError('Password incorrect', 400);
         return next(err);
@@ -52,32 +52,36 @@ exports.login = asyncErrHandler(async (req, res, next) => {
 })
 
 exports.protect = asyncErrHandler(async (req, res, next) => {
-    // read the token and check if it exist
+    // Read the token and check if it exist
     let token = req.headers.authorization
-    
-    if(token && token.startsWith('bearer ')){
+
+    if (token && token.startsWith('bearer ')) {
         token = token.split(' ')[1]
     }
-    if(!token){
+    if (!token) {
         const err = new CustomError('you are not logged in', 401)
         next(err)
     }
 
-    // validate the token
+    // Validate the token
     const decodedToken = await util.promisify(jwt.verify)(token, process.env.SECRET_STR)
-    // if the user exist
-    const user = await User.findOne({_id : decodedToken.id})
 
-    if(!user){
-        next(new CustomError("user is missing", 404))
+    // If the user exist
+    const user = await User.findOne({ _id: decodedToken.id })
+    if (!user) {
+        next(new CustomError("user is missing", 401))
     }
 
-    //if user changed password
-    const passwordChange = user.isPasswordChanged(decodedToken.iat)
-    user
+    // If user changed password
+    const bol = await user.isPasswordChanged(decodedToken.iat)
+    if (bol) {
+        console.log("executed")
+        next(new CustomError("Password has been changed", 401))
+    }
 
 
 
-
+    // Allow user access route
+    req.user = user
     next()
 })

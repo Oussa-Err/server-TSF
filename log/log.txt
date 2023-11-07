@@ -157,3 +157,49 @@ time took to fetch is: 314 milliseconds
 time took to fetch is: 226 milliseconds
 
 time took to fetch is: 299 milliseconds
+
+time took to fetch is: 197 milliseconds
+
+time took to fetch is: 468 milliseconds
+
+time took to fetch is: 185 milliseconds
+
+time took to fetch is: 175 milliseconds
+
+time took to fetch is: 277 milliseconds
+
+time took to fetch is: 189 milliseconds
+
+time took to fetch is: 205 milliseconds
+
+time took to fetch is: 298 milliseconds
+
+time took to fetch is: 157 milliseconds
+
+time took to fetch is: 284 milliseconds
+
+time took to fetch is: 197 milliseconds
+
+time took to fetch is: 157 milliseconds
+
+time took to fetch is: 312 milliseconds
+
+time took to fetch is: 317 milliseconds
+
+time took to fetch is: 310 milliseconds
+
+time took to fetch is: 293 milliseconds
+
+time took to fetch is: 208 milliseconds
+
+time took to fetch is: 271 milliseconds
+
+time took to fetch is: 265 milliseconds
+
+time took to fetch is: 423 milliseconds
+
+time took to fetch is: 171 milliseconds
+
+time took to fetch is: 191 milliseconds
+
+time took to fetch is: 184 milliseconds
