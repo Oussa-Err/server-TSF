@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date().toISOString(),
-        select: false
     },
 })
 
@@ -60,6 +59,15 @@ userSchema.post('save', function (doc, next) {
 
 userSchema.methods.comparePswAndPswdb = async function(psw, pswdb) {
     return await bcrypt.compare(psw, pswdb)
+}
+
+userSchema.methods.isPasswordChanged = async function(JWTtimeStamp) {
+    if(this.createdAt){
+        const createAtTimeStamp = Math.floor(this.createdAt.getTime() / 1000)
+        console.log(createAtTimeStamp+' '+JWTtimeStamp/1000 + this.createdAt === JWTtimeStamp)
+        return this.createdAt === JWTtimeStamp
+    }
+    return false
 }
 
 const User = mongoose.model('User', userSchema)

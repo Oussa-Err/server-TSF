@@ -40,7 +40,6 @@ const validationError = (error) => {
     const messages = errorMsg.join(". ")
     console.log(messages)
     return new CustomError(messages, 400)
-    
 }
 
 const handleJWTError = () => {

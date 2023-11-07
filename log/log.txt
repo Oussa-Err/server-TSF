@@ -103,3 +103,57 @@ time took to fetch is: 1106 milliseconds
 A new user with name gerouj has been created by gerouj at Mon Nov 06 2023 23:34:58 GMT+0100 (GMT+01:00)
 
 time took to fetch is: 2323 milliseconds
+
+time took to fetch is: 231 milliseconds
+
+time took to fetch is: 184 milliseconds
+
+time took to fetch is: 227 milliseconds
+
+time took to fetch is: 3380 milliseconds
+
+time took to fetch is: 807 milliseconds
+
+time took to fetch is: 164 milliseconds
+
+A new user with name gerouj has been created by gerouj at Tue Nov 07 2023 18:09:22 GMT+0100 (GMT+01:00)
+
+time took to fetch is: 299 milliseconds
+
+time took to fetch is: 273 milliseconds
+
+A new user with name gerouj has been created by gerouj at Tue Jan 20 1970 16:01:50 GMT+0000 (GMT)
+
+time took to fetch is: 184 milliseconds
+
+time took to fetch is: 307 milliseconds
+
+time took to fetch is: 305 milliseconds
+
+time took to fetch is: 214 milliseconds
+
+time took to fetch is: 160 milliseconds
+
+time took to fetch is: 297 milliseconds
+
+time took to fetch is: 181 milliseconds
+
+time took to fetch is: 303 milliseconds
+
+time took to fetch is: 259 milliseconds
+
+time took to fetch is: 207 milliseconds
+
+time took to fetch is: 239 milliseconds
+
+time took to fetch is: 291 milliseconds
+
+time took to fetch is: 297 milliseconds
+
+A new user with name gerouj has been created by gerouj at Tue Nov 07 2023 20:07:23 GMT+0100 (GMT+01:00)
+
+time took to fetch is: 314 milliseconds
+
+time took to fetch is: 226 milliseconds
+
+time took to fetch is: 299 milliseconds

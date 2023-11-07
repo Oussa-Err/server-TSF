@@ -6,7 +6,7 @@ const util = require('util')
 
 
 const signToken = function (id) {
-    return jwt.sign({ id: id }, process.env.SECRET_STR, { expiresIn: process.env.TOKEN_EXPIRATION })
+    return jwt.sign({ id }, process.env.SECRET_STR, { expiresIn: process.env.TOKEN_EXPIRATION })
 }
 
 exports.signUp = asyncErrHandler(async (req, res) => {
@@ -64,11 +64,20 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     }
 
     // validate the token
-    const conn = await util.promisify(jwt.verify)(token, process.env.SECRET_STR)
+    const decodedToken = await util.promisify(jwt.verify)(token, process.env.SECRET_STR)
+    // if the user exist
+    const user = await User.findOne({_id : decodedToken.id})
+
+    if(!user){
+        next(new CustomError("user is missing", 404))
+    }
+
+    //if user changed password
+    const passwordChange = user.isPasswordChanged(decodedToken.iat)
+    user
 
 
 
-    console.log(conn)
 
     next()
 })
