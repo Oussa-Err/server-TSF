@@ -42,7 +42,6 @@ const duplicateKeyError = (error) => {
 const validationError = (error) => {
     const errorMsg = Object.values(error.errors).map(el => el.message)
     const messages = errorMsg.join(". ")
-    console.log(messages)
     return new CustomError(messages, 400)
 }
 
