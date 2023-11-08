@@ -31,7 +31,11 @@ const castError = (error) => {
 }
 
 const duplicateKeyError = (error) => {
-    const msg = new CustomError(`this name already exist: ${error.keyValue.name}`, 400)
+    let msg
+    if (error.keyValue.name) msg = new CustomError(`this name already exist: ${error.keyValue.name}`, 400)
+
+    if (error.keyValue.email) msg = new CustomError(`this email already exist: ${error.keyValue.email}`, 400)
+    
     return msg
 }
 

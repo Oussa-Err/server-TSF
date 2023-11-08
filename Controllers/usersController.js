@@ -55,7 +55,7 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     // Read the token and check if it exist
     let token = req.headers.authorization
 
-    if (token && token.startsWith('bearer ')) {
+    if (token && token.startsWith('Bearer ')) {
         token = token.split(' ')[1]
     }
     if (!token) {
@@ -69,7 +69,7 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     // If the user exist
     const user = await User.findOne({ _id: decodedToken.id })
     if (!user) {
-        next(new CustomError("user is missing", 401))
+        next(new CustomError("User is missing, log in again", 401))
     }
 
     // If user changed password

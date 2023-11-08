@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: new Date(),
+        default: Date.now(),
     },
 })
 
@@ -64,6 +64,7 @@ userSchema.methods.comparePswAndPswdb = async function(psw, pswdb) {
 userSchema.methods.isPasswordChanged = async function(JWTtimeStamp) {
     if(this.createdAt){
         const createAtTimeStamp = parseInt(this.createdAt.getTime()/1000, 10)
+        console.log(createAtTimeStamp)
         return JWTtimeStamp < createAtTimeStamp
     }
     return false
