@@ -85,3 +85,14 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     req.user = user
     next()
 })
+
+exports.restrict = (...roles) => {
+    return (req, res, next) => {
+        console.log(req.user)
+        if (!req.user || !roles.includes(req.user.role)) {
+            const msg = new CustomError('you cannot perform the task', 403);
+            return next(msg);
+        }
+        next();
+    };
+}
