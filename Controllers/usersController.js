@@ -3,6 +3,7 @@ const asyncErrHandler = require('./../utils/asyncErrHandler')
 const jwt = require('jsonwebtoken')
 const CustomError = require('../utils/customError')
 const util = require('util')
+const crypto = require('crypto')
 
 
 const signToken = function (id) {
@@ -96,3 +97,24 @@ exports.restrict = (...roles) => {
         next();
     };
 }
+
+
+exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
+    //Get User based on posted email
+    const user = await User.findOne({ email: req.body.email })
+    
+    if (!user) {
+        const err = new CustomError('this email does not exist', 400)
+        next(err)
+    }
+
+    //generate a random reset token
+
+    //send the token back to the user email
+
+
+
+})
+
+exports.resetPassword = asyncErrHandler(async (req, res, next) => {
+})

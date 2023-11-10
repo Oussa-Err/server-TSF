@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         required: [true, 'please confirm your password'],
         validate: {
             // The validator will only be triggred for save() and create()
-            validator: function(pwd) {
+            validator: function (pwd) {
                 return this.confirmedPassword === this.password
             },
             message: "Confirmed password & Password should match"
@@ -46,11 +46,11 @@ const userSchema = new mongoose.Schema({
     },
 })
 
-userSchema.pre('save', async function(next){
+userSchema.pre('save', async function (next) {
     this.createdBy = this.name
-    if(!this.isModified) return next()
+    if (!this.isModified) return next()
     this.password = await bcrypt.hash(this.password, 10)
-this.confirmedPassword = undefined
+    this.confirmedPassword = undefined
     next()
 })
 
@@ -62,16 +62,20 @@ userSchema.post('save', function (doc, next) {
     next()
 })
 
-userSchema.methods.comparePswAndPswdb = async function(psw, pswdb) {
+userSchema.methods.comparePswAndPswdb = async function (psw, pswdb) {
     return await bcrypt.compare(psw, pswdb)
 }
 
-userSchema.methods.isPasswordChanged = async function(JWTtimeStamp) {
-    if(this.createdAt){
-        const createAtTimeStamp = parseInt(this.createdAt.getTime()/1000, 10)
+userSchema.methods.isPasswordChanged = async function (JWTtimeStamp) {
+    if (this.createdAt) {
+        const createAtTimeStamp = parseInt(this.createdAt.getTime() / 1000, 10)
         return JWTtimeStamp < createAtTimeStamp
     }
     return false
+}
+
+userSchema.methods.createResetPassword = async function () {
+
 }
 
 const User = mongoose.model('User', userSchema)
