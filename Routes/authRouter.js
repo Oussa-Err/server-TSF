@@ -9,5 +9,11 @@ router.route('/signup')
 
 router.route('/login')
     .post(usersController.login)
+
+router.route('/forgot-password')
+    .post(usersController.forgotPassword)
+
+router.route('/reset-password')
+    .post(usersController.resetPassword)
     
 module.exports = router

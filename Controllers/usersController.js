@@ -3,7 +3,6 @@ const asyncErrHandler = require('./../utils/asyncErrHandler')
 const jwt = require('jsonwebtoken')
 const CustomError = require('../utils/customError')
 const util = require('util')
-const crypto = require('crypto')
 
 
 const signToken = function (id) {
@@ -109,6 +108,9 @@ exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
     }
 
     //generate a random reset token
+    const resetToken = user.createResetPassword()
+    await user.save()
+
 
     //send the token back to the user email
 
