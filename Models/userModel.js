@@ -78,13 +78,10 @@ userSchema.methods.isPasswordChanged = async function (JWTtimeStamp) {
 }
 
 userSchema.methods.createResetPassword = async function () {
-    const resetToken = crypto.randomBytes(32, function(err, buffer) {
-        if (err) console.log(err)
-        const token = buffer.toString('hex');
-      })
+    const resetToken = crypto.randomBytes(32).toString("hex")
     this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex')
     this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000
-    console.log(resetToken)
+    console.log(resetToken, this.passwordResetToken )
     return resetToken
 }
 
