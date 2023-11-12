@@ -106,16 +106,13 @@ exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
         const err = new CustomError('this email does not exist', 400)
         next(err)
     }
-
-    //generate a random reset token
-    const resetToken = user.createResetPassword()
+    
+    //Generate a random reset token
+    const resetToken = user.createResetPasswordToken()
     await user.save({validateBeforeSave: false})
-    console.log(await user.find({}))
 
 
     //send the token back to the user email
-
-
 
 })
 
