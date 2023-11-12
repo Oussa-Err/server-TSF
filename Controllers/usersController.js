@@ -86,30 +86,28 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     next()
 })
 
-exports.restrict = (...roles) => {
-    return (req, res, next) => {
-        console.log(req.user)
-        if (!req.user || !roles.includes(req.user.role)) {
-            const msg = new CustomError('you cannot perform the task', 403);
-            return next(msg);
-        }
-        next();
-    };
-}
+exports.restrict = (req, res, next) => {
+    console.log(req.user)
+    if (!req.user || req.user.role !== "admin") {
+        const msg = new CustomError('you cannot perform the task', 403);
+        return next(msg);
+    }
+    next();
+};
 
 
 exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
     //Get User based on posted email
     const user = await User.findOne({ email: req.body.email })
-    
+
     if (!user) {
         const err = new CustomError('this email does not exist', 400)
         next(err)
     }
-    
+
     //Generate a random reset token
     const resetToken = user.createResetPasswordToken()
-    await user.save({validateBeforeSave: false})
+    await user.save({ validateBeforeSave: false })
 
 
     //send the token back to the user email

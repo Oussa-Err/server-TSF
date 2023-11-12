@@ -26,6 +26,6 @@ router.route('/')
 router.route('/:id')
     .delete(protect, restrict('admin'), deleteMovie)
     .get(protect, getMovie)
-    .patch(protect, restrict(''), updateMovie)
+    .patch(protect, restrict('admin'), updateMovie)
 
 module.exports = router
