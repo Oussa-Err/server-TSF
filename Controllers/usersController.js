@@ -86,14 +86,16 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     next()
 })
 
-exports.restrict = (req, res, next) => {
-    console.log(req.user)
-    if (!req.user || req.user.role !== "admin") {
-        const msg = new CustomError('you cannot perform the task', 403);
-        return next(msg);
-    }
-    next();
-};
+exports.restrict = (...roles) => {
+    return (req, res, next) => {
+        console.log(req.user)
+        if (!req.user || req.user.role !== "admin") {
+            const msg = new CustomError('you cannot perform the task', 403);
+            return next(msg);
+        }
+        next();
+    };
+}
 
 
 exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
@@ -115,4 +117,5 @@ exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
 })
 
 exports.resetPassword = asyncErrHandler(async (req, res, next) => {
+
 })

@@ -13,7 +13,7 @@ const app = require('./app')
 mongoose.connect(process.env.CONN_STR, { useNewUrlParser: true })
     .then(connection => console.log("DB connection Successful"))
 
-const server = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT_SERVER || 8080, () => {
     console.log('the server has started...')
 })
 
