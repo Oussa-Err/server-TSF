@@ -1,23 +1,26 @@
 var nodemailer = require('nodemailer');
-const send = (option) => {
-    const transport = nodemailer.createTransport({
-      host: process.env.HOST,
-      port: process.env.PORT,
+
+const sendMail = async (options) => {
+  // CREATE A TRANSPORTER
+    const transporter = nodemailer.createTransport({
+      host: process.env.MAIL_HOST,
+      port: process.env.MAIL_PORT,
       auth: {
-        user: process.env.USERNAME,
-        pass: process.env.MAILTRAP_PASSWORD
+        user: process.env.MAIL_NAME,
+        pass: process.env.MAIL_PASSWORD
       }
     });
+    console.log(process.env.MAIL_PASSWORD)
 
-    var mailOptions = {
-      from: 'test@gmail.com',
-      to: 'user1@example.com, user2@example.com',
-      subject: 'Nice Nodemailer test',
-      text: 'Hey there, it’s our first message sent with Nodemailer ',
-      html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br />',
+    const mailOptions = {
+      from: "DexFlix support<support@dexflix.com>",
+      to: options.email,
+      subject: options.subject,
+      text: options.text,
     };
+    await transporter.sendMail(mailOptions)
 
 }    
 
 
-module.exports = send
+module.exports = sendMail

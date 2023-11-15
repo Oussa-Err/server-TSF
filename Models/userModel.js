@@ -50,12 +50,14 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function (next) {
-    this.createdBy = this.name
-    if (!this.isModified) return next()
-    this.password = await bcrypt.hash(this.password, 10)
-    this.confirmedPassword = undefined
-    next()
-})
+    this.createdBy = this.name;
+
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    this.confirmedPassword = undefined;
+    next();
+    return next(error);
+});
 
 userSchema.post('save', function (doc, next) {
     const content = `\n\nA new user with name ${this.name} has been created by ${this.createdBy} at ${this.createdAt}`
@@ -78,11 +80,15 @@ userSchema.methods.isPasswordChanged = async function (JWTtimeStamp) {
 }
 
 userSchema.methods.createResetPasswordToken = function () {
-    const resetToken = crypto.randomBytes(32).toString("hex")
-    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex')
-    this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000
+    const resetToken = crypto.randomBytes(12).toString('hex');
+
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    this.passwordResetToken = hashedToken;
+    this.passwordResetTokenExpires = Date.now() + 10 * 60 * 1000;
+
     return resetToken
-}
+};
 
 const User = mongoose.model('User', userSchema)
 

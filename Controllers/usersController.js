@@ -3,6 +3,7 @@ const asyncErrHandler = require('./../utils/asyncErrHandler')
 const jwt = require('jsonwebtoken')
 const CustomError = require('../utils/customError')
 const util = require('util')
+const sendMail = require('../utils/send')
 
 
 const signToken = function (id) {
@@ -109,11 +110,31 @@ exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
 
     //Generate a random reset token
     const resetToken = user.createResetPasswordToken()
+    console.log(resetToken + '\n' + user)
     await user.save({ validateBeforeSave: false })
-
-
     //send the token back to the user email
-
+    const resetUrl = `${req.protocol}://${req.get('host')}/users/reset-password/${resetToken}`
+    const text = `we have received a password reset request. Please use the below link to reset your password\n\n${resetUrl}\n\nThe link expires in 10 min`
+    try {
+        console.log("1-executed..")
+        await sendMail({
+            email: user.email,
+            subject: "Password change request received",
+            text: text
+        })
+        
+        res.status(200).json({
+            status: "success",
+            message: "Password reset link sent to the user email"
+        })
+    } catch (err) {
+        console.log("2-executed..")
+        user.passwordResetToken = undefined
+        user.passwordResetTokenExpires = undefined
+        await user.save({ validateBeforeSave: false })
+     
+        next(new CustomError("there was an error sending password reset email. Please try again later", 500))
+    }
 })
 
 exports.resetPassword = asyncErrHandler(async (req, res, next) => {
