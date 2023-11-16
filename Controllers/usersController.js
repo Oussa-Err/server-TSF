@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const CustomError = require('../utils/customError')
 const util = require('util')
 const sendMail = require('../utils/send')
+const crypto = require("crypto")
 
 
 const signToken = function (id) {
@@ -122,7 +123,7 @@ exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
             subject: "Password change request received",
             text: text
         })
-        
+
         res.status(200).json({
             status: "success",
             message: "Password reset link sent to the user email"
@@ -132,11 +133,38 @@ exports.forgotPassword = asyncErrHandler(async (req, res, next) => {
         user.passwordResetToken = undefined
         user.passwordResetTokenExpires = undefined
         await user.save({ validateBeforeSave: false })
-     
+
         next(new CustomError("there was an error sending password reset email. Please try again later", 500))
     }
 })
 
 exports.resetPassword = asyncErrHandler(async (req, res, next) => {
+    const token = crypto.createHash("sha256").update(req.params.token).digest('hex')
 
+    const {password, confirmedPassword} = req.body
+
+    if(!password || !confirmedPassword){
+        next(new CustomError("please enter a password and confirm it"), 400)
+    }
+
+    const user = await User.findOne({ passwordResetToken: token, passwordResetTokenExpires: {$gt: Date.now()}})
+
+    if(!user){
+        next(new CustomError("Token is invalid or password reset token expired", 400))
+    }
+
+    user.password = password
+    user.confirmedPassword = confirmedPassword
+    user.passwordResetToken = undefined
+    user.passwordResetTokenExpires = undefined
+    
+    user.save()
+
+    // log the user
+    const loginToken = signToken(user._id)
+
+    res.status(200).json({
+        status: "successs",
+        token: loginToken
+    })
 })
