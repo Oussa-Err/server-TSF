@@ -26,15 +26,15 @@ const prodError = (res, err) => {
 }
 
 const castError = (error) => {
-    const msg = new CustomError(`invalid value for ${error.path}: ${error.value}`, 500)
+    const msg = new CustomError(`invalid value for ${error.path}: ${error.value}`, 400)
     return msg
 }
 
 const duplicateKeyError = (error) => {
     let msg
-    if (error.keyValue.name) msg = new CustomError(`this name already exist: ${error.keyValue.name}`, 400)
+    if (error.keyValue.name) msg = new CustomError(`this name already exists: ${error.keyValue.name}`, 400)
 
-    if (error.keyValue.email) msg = new CustomError(`this email already exist: ${error.keyValue.email}`, 400)
+    if (error.keyValue.email) msg = new CustomError(`this email already exists: ${error.keyValue.email}`, 400)
     
     return msg
 }
