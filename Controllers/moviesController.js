@@ -34,8 +34,6 @@ exports.getAllMovies = asyncErrHandler(async (req, res) => {
 })
 
 exports.getMovie = asyncErrHandler(async (req, res, next) => {
-    // const movies = await Movie.find({_id: req.params.id})
-    // or
     const movie = await Movie.findById(req.params.id)
 
     if (!movie) {
