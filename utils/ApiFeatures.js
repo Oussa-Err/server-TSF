@@ -4,7 +4,7 @@ class ApiFeatures {
         this.queryStr = queryStr
     }
 
-    //ADVANCE FILTERING`
+    //ADVANCE FILTERING
     filter() {
         let queryString = JSON.stringify(this.queryStr)
         queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)

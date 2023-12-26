@@ -19,23 +19,23 @@ const userSchema = new mongoose.Schema({
         lowercase: true
     },
     photo: String,
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
     password: {
         type: String,
         required: [true, 'please enter a password'],
         minlength: [8, 'minimum 8 characters'],
         select: false
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
-    },
     confirmedPassword: {
         type: String,
         required: [true, 'please confirm your password'],
         validate: {
             // The validator will only be triggred for save() and create()
-            validator: function (pwd) {
+            validator: function () {
                 return this.confirmedPassword === this.password
             },
             message: "Confirmed password & Password should match"
@@ -55,7 +55,7 @@ userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 10);
     this.confirmedPassword = undefined;
-    next(); // why this line
+    next();
     return next(error);
 });
 

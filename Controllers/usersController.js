@@ -60,6 +60,7 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     if (token && token.startsWith('Bearer ')) {
         token = token.split(' ')[1]
     }
+
     if (!token) {
         const err = new CustomError('you are not logged in', 401)
         next(err)
@@ -77,11 +78,8 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
     // If user changed password
     const bol = await user.isPasswordChanged(decodedToken.iat)
     if (bol) {
-        console.log("executed")
         next(new CustomError("Password has been changed", 401))
     }
-
-
 
     // Allow user access route
     req.user = user
