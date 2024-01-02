@@ -7,7 +7,7 @@ const { getAllMovies, deleteMovie, updateMovie, getHighestRatings, getMovie, cre
 
 const {protect, restrict} = usersController
 
-// router.param('id', moviesController.checkID) // we won't need this moongose does it for a living
+// router.param('id', moviesController.checkID) // we won't need this, moongose does it for a living
 
 //ALIASES 
 router.route('/highest-ratings')

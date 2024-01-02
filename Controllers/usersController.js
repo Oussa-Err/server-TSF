@@ -71,6 +71,7 @@ exports.protect = asyncErrHandler(async (req, res, next) => {
 
     // If the user exist
     const user = await User.findOne({ _id: decodedToken.id })
+    
     if (!user) {
         next(new CustomError("User is missing, log in again", 401))
     }

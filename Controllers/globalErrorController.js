@@ -12,12 +12,12 @@ const devError = (res, err) => {
 }
 
 const prodError = (res, err) => {
-    if(err.isOperational){
+    if (err.isOperational) {
         res.status(err.statusCode).json({
             status: err.status,
             message: err.message
         })
-    }else{
+    } else {
         res.status(500).json({
             status: "error",
             message: "error unknown, try again later"
@@ -35,7 +35,7 @@ const duplicateKeyError = (error) => {
     if (error.keyValue.name) msg = new CustomError(`this name already exists: ${error.keyValue.name}`, 400)
 
     if (error.keyValue.email) msg = new CustomError(`this email already exists: ${error.keyValue.email}`, 400)
-    
+
     return msg
 }
 
@@ -61,17 +61,17 @@ module.exports = (err, req, res, next) => {
 
     if (process.env.NODE_ENV === 'development') {
         devError(res, err)
-    } else if(process.env.NODE_ENV === "production"){
-        
-        if(err.name === "CastError") err = castError(err)
-        
-        if(err.code === 11000) err = duplicateKeyError(err)
-        
-        if(err.name === "ValidationError") err = validationError(err)
+    } else if (process.env.NODE_ENV === "production") {
 
-        if(err.name === "TokenExpiredError") err = handleExpiredJWT(err)
+        if (err.name === "CastError") err = castError(err)
 
-        if(err.name === "JsonWebTokenError") err = handleJWTError(err)
+        if (err.code === 11000) err = duplicateKeyError(err)
+
+        if (err.name === "ValidationError") err = validationError(err)
+
+        if (err.name === "TokenExpiredError") err = handleExpiredJWT(err)
+
+        if (err.name === "JsonWebTokenError") err = handleJWTError(err)
 
 
         prodError(res, err)
