@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "export NODE_ENV=development& nodemon server.js",
-    "prod": "export NODE_ENV=production & nodemon server.js"
+    "dev": "NODE_ENV=development & nodemon server.js",
+    "prod": "NODE_ENV=production & nodemon server.js"
   },
   "author": "ouss-err",
   "license": "ISC",
